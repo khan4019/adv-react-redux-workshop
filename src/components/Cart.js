@@ -1,9 +1,17 @@
 import React from 'react';
 
-const Cart = () => {
+const Cart = ({products}) => {
+    console.log(products);
     return (
-        <div>
-            <h1>This is Cart</h1>
+        <div className="feed">
+            {
+                products.map(product=>
+                    <img 
+                        key={product.id+200}
+                        style={{width:'300px'}}
+                        src={product.url} alt=""/>
+                    )
+            }
         </div>
     );
 };

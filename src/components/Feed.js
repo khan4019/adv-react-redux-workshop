@@ -17,18 +17,19 @@ class Feed extends Component {
     
 
     render() {
-        const {cart, toggleToCart} = this.props;
+        const {cart, products, toggleToCart} = this.props;
         console.log(this.props);
         return (
             <>
             <div className="feed">
                 <h1>This is Feed</h1>
                 {
-                    this.state.products.map(product=>
+                    products.map(product=>
                         <Post
                             key={product.id}
                             product={product}
                             toggleToCart = {toggleToCart}
+                            liked={cart.includes(product.id)}
                             >{product.name}</Post>
                         )
                 }

@@ -2,20 +2,8 @@ import React, { Component } from 'react';
 
 class Post extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            liked:false
-        }
-    }
-
-    toggleLike = () => {
-        this.setState({liked:!this.state.liked})
-    }
-    
     render() {
-        const {product, toggleToCart} = this.props;
-        const liked = this.state.liked;
+        const {product, liked, toggleToCart} = this.props;
         const heartClass = `sprite icon ${liked ? 'heart-filled': 'heart-empty'}`
         return (
             <div className="post">
@@ -26,10 +14,7 @@ class Post extends Component {
                     <div 
                         className={heartClass}
                         onClick={
-                            () => {
-                                toggleToCart(product.id)
-                                this.toggleLike()
-                            }
+                            () =>toggleToCart(product.id)
                         }
                     ></div>
                     <div className="sprite icon comment"></div>

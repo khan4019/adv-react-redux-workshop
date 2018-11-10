@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
+import createSagaMiddleware  from 'redux-saga';
 
 import './App.css';
-import Header from './components/Header';
-import Feed from './components/Feed';
-import cartReducers from './reducers/cartReducers';
+import rootReducers from './reducers/';
 import FeedContainer from './containers/FeedContainer';
 import Cart from './components/Cart';
 import HeaderContainer from './containers/HeaderContainer';
+import rootSaga from './sagas/productSagas';
+import CartContainer from './containers/CartContainer';
 
-const store = createStore(cartReducers);
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(
+  rootReducers, 
+  applyMiddleware(sagaMiddleware)
+  );
+
+  sagaMiddleware.run(rootSaga);
 
 class App extends Component {
   render() {
@@ -23,7 +31,7 @@ class App extends Component {
               <HeaderContainer></HeaderContainer>
               <Route exact path="/" component={FeedContainer}></Route>
               <Route path="/feed" component={FeedContainer}></Route>
-              <Route path="/cart" component={Cart}></Route>
+              <Route path="/cart" component={CartContainer}></Route>
             </div>
           </Router>
           
