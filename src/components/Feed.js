@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import data from '../data/productData.json';
 import Post from './Post.js';
+import Header from './Header';
 
 class Feed extends Component {
     constructor(props) {
         super(props);
         this.state={
-            products:[]
+            products:[],
+            cart:[]
         }
     }
     
@@ -14,9 +16,23 @@ class Feed extends Component {
         this.setState({products:data})
     }
     
+    toggleToCart = id => {
+        const cart = this.state.cart;
+        let newCart;
+        if(cart.includes(id)){
+            newCart = cart.filter(curr => curr !==id);
+        }
+        else{
+            newCart = [...cart, id]
+        }
+        this.setState({cart:newCart})
+    }
 
     render() {
+        const cart = this.state.cart;
         return (
+            <>
+            <Header cart={cart}></Header>
             <div className="feed">
                 <h1>This is Feed</h1>
                 {
@@ -24,10 +40,12 @@ class Feed extends Component {
                         <Post
                             key={product.id}
                             product={product}
+                            toggleToCart = {this.toggleToCart}
                             >{product.name}</Post>
                         )
                 }
             </div>
+            </>
         );
     }
 }
