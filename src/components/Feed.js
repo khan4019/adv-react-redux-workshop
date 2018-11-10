@@ -7,8 +7,7 @@ class Feed extends Component {
     constructor(props) {
         super(props);
         this.state={
-            products:[],
-            cart:[]
+            products:[]
         }
     }
     
@@ -16,23 +15,12 @@ class Feed extends Component {
         this.setState({products:data})
     }
     
-    toggleToCart = id => {
-        const cart = this.state.cart;
-        let newCart;
-        if(cart.includes(id)){
-            newCart = cart.filter(curr => curr !==id);
-        }
-        else{
-            newCart = [...cart, id]
-        }
-        this.setState({cart:newCart})
-    }
 
     render() {
-        const cart = this.state.cart;
+        const {cart, toggleToCart} = this.props;
+        console.log(this.props);
         return (
             <>
-            <Header cart={cart}></Header>
             <div className="feed">
                 <h1>This is Feed</h1>
                 {
@@ -40,7 +28,7 @@ class Feed extends Component {
                         <Post
                             key={product.id}
                             product={product}
-                            toggleToCart = {this.toggleToCart}
+                            toggleToCart = {toggleToCart}
                             >{product.name}</Post>
                         )
                 }
